@@ -1,10 +1,21 @@
-package com.deise.souza.model;
+package com.deise.webService.model;
 
-public class Cliente {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
+public class Clientes {
 	
+	@Id
+	@GeneratedValue
+	@Column
 	private Integer id;
-	private String nome;
 	
+	@Column
+	private String nome;
+
 	
 	public Integer getId() {
 		return id;
