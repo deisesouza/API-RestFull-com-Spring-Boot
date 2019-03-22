@@ -26,11 +26,7 @@ public class ClienteService {
 
 	}
 	
-	public Integer buscarId(Integer id) {
-	   return clienteRepository.findOne(id);
-	}
-	
-	
+		
 	public void excluir(Cliente cliente) {
 		clienteRepository.delete(cliente);
 	}
