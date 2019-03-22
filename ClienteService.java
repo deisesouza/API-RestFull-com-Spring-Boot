@@ -26,9 +26,9 @@ public class ClienteService {
 
 	}
 	
-	//public Cliente buscarId(Integer id) {
-	//   return clienteRepository.findOne(id);
-	//}
+	public Integer buscarId(Integer id) {
+	   return clienteRepository.findOne(id);
+	}
 	
 	
 	public void excluir(Cliente cliente) {
