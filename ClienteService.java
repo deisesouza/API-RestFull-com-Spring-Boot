@@ -4,42 +4,41 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.deise.souza.model.Cliente;
+import com.deise.souza.repository.ClienteRepository;
 
 @Service
 public class ClienteService {
-
-	private Map<Integer, Cliente> clientes = new HashMap<>();
-	private Integer proximoId=1;
 	
-	//REGRA NEGOCIO
-	public Cliente cadastrar(Cliente cliente) {
+	@Autowired
+	ClienteRepository clienteRepository;
 		
-		cliente.setId(proximoId);
-		proximoId++; 	
-		clientes.put(cliente.getId(), cliente);
-		return cliente;
+	//REGRAS DE NEGOCIO
+	public Cliente cadastrar(Cliente cliente) {
+		return clienteRepository.save(cliente);
 	}
 	
 	public Collection<Cliente> buscarTodos(){
-		return clientes.values();
+		return clienteRepository.findAll();
+
 	}
 	
-	public Cliente buscarId(Integer id) {
-		return clientes.get(id);
-	}
+	//public Cliente buscarId(Integer id) {
+	//   return clienteRepository.findOne(id);
+	//}
 	
 	
 	public void excluir(Cliente cliente) {
-		clientes.remove(cliente.getId());
+		clienteRepository.delete(cliente);
 	}
 	
 	
 	public Cliente alterar(Cliente cliente) {
-		clientes.put(cliente.getId(), cliente);
-		return cliente;
+		return clienteRepository.save(cliente);
 	}
 	
 }
+
