@@ -1,5 +1,6 @@
 package com.deise.souza.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,41 +13,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Collection;
 import com.deise.souza.model.*;
-
+import com.deise.souza.service.*;
 
 @RestController
 public class ClienteController {
 	
-	Map<Integer, Cliente> clientes = new HashMap<>();
-	Integer proximoId=1;
-	
-	//REGRA NEGOCIO
-	private Cliente cadastrar(Cliente cliente) {
-		
-		cliente.setId(proximoId);
-		proximoId++; 	
-		clientes.put(cliente.getId(), cliente);
-		return cliente;
-	}
-	
-	private Collection<Cliente> buscarTodos(){
-		return clientes.values();
-	}
-	
-	private Cliente buscarId(Integer id) {
-		return clientes.get(id);
-	}
-	
-	
-	private void excluir(Cliente cliente) {
-		clientes.remove(cliente.getId());
-	}
-	
-	
-	private Cliente alterar(Cliente cliente) {
-		clientes.put(cliente.getId(), cliente);
-		return cliente;
-	}
+	@Autowired
+	ClienteService clienteService;
 	
 	
 	//ENDPOINTS
@@ -55,7 +28,7 @@ public class ClienteController {
 	@RequestMapping(method=RequestMethod.POST, value="/clientes", consumes = MediaType.APPLICATION_JSON_VALUE)
 	private ResponseEntity<Cliente> cadastrarCliente(@RequestBody Cliente cliente) {
 		
-		Cliente cadastrado = cadastrar(cliente);
+		Cliente cadastrado = clienteService.cadastrar(cliente);
 		return new ResponseEntity<>(cadastrado, HttpStatus.CREATED);
 	}
 	
@@ -63,7 +36,7 @@ public class ClienteController {
 	@RequestMapping(method=RequestMethod.GET, value="/clientes", produces = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
 	private ResponseEntity<Collection<Cliente>> buscarTodosClientes() {
 		
-		Collection<Cliente> buscados = buscarTodos();
+		Collection<Cliente> buscados = clienteService.buscarTodos();
 		return new ResponseEntity<>(buscados, HttpStatus.OK);
 	}
 	
@@ -71,12 +44,12 @@ public class ClienteController {
 	@RequestMapping(method=RequestMethod.DELETE, value="/clientes/{id}")
 	public ResponseEntity<Cliente> excluirCliente(@PathVariable Integer id) {
 		
-		Cliente clienteEncontrado = buscarId(id);
+		Cliente clienteEncontrado = clienteService.buscarId(id);
 		
 		if(clienteEncontrado == null) {
 			return new ResponseEntity<>(clienteEncontrado, HttpStatus.NOT_FOUND);
 		}
-			excluir(clienteEncontrado);
+		clienteService.excluir(clienteEncontrado);
 			return new ResponseEntity<>(HttpStatus.OK);
 		
 	}
@@ -85,7 +58,7 @@ public class ClienteController {
 	@RequestMapping(method=RequestMethod.GET, value="/clientes/{id}")
 	public ResponseEntity<Cliente> consultarCliente(@PathVariable Integer id) {
 		
-		Cliente clienteEncontrado = buscarId(id);
+		Cliente clienteEncontrado = clienteService.buscarId(id);
 		
 		if(clienteEncontrado == null) {
 			return new ResponseEntity<>(clienteEncontrado, HttpStatus.NOT_FOUND);
@@ -99,12 +72,12 @@ public class ClienteController {
 		@RequestMapping(method=RequestMethod.PUT, value="/cliente")
 		public ResponseEntity<Cliente> alterarCliente(@RequestBody Cliente cliente) {
 			
-			Cliente clienteAlterado = alterar(cliente);
+			Cliente clienteAlterado = clienteService.alterar(cliente);
 			
 			if(clienteAlterado == null) {
 				return new ResponseEntity<>(clienteAlterado, HttpStatus.NOT_FOUND);
 			}
-				alterar(clienteAlterado);
+			clienteService.alterar(clienteAlterado);
 				return new ResponseEntity<>(clienteAlterado, HttpStatus.OK);
 			
 		}
