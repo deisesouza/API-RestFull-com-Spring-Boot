@@ -15,6 +15,7 @@ public class ClienteService {
 	
 	@Autowired
 	ClienteRepository clienteRepository;
+	Cliente cliente;
 		
 	//REGRAS DE NEGOCIO
 	public Cliente cadastrar(Cliente cliente) {
@@ -25,16 +26,18 @@ public class ClienteService {
 		return clienteRepository.findAll();
 
 	}
+
+	public Cliente buscarId(Integer id) {
+	   clienteRepository.findById(id);
+	   return cliente;
+	}
 	
-		
 	public void excluir(Cliente cliente) {
 		clienteRepository.delete(cliente);
 	}
-	
 	
 	public Cliente alterar(Cliente cliente) {
 		return clienteRepository.save(cliente);
 	}
 	
 }
-
