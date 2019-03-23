@@ -26,7 +26,7 @@ public class ClienteController {
 	
 	//cadastrar cliente
 	@RequestMapping(method=RequestMethod.POST, value="/clientes", consumes = MediaType.APPLICATION_JSON_VALUE)
-	private ResponseEntity<Cliente> cadastrarCliente(@RequestBody Cliente cliente) {
+	public ResponseEntity<Cliente> cadastrarCliente(@RequestBody Cliente cliente) {
 		
 		Cliente cadastrado = clienteService.cadastrar(cliente);
 		return new ResponseEntity<>(cadastrado, HttpStatus.CREATED);
@@ -34,7 +34,7 @@ public class ClienteController {
 	
 	//buscar todos os clientes
 	@RequestMapping(method=RequestMethod.GET, value="/clientes", produces = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
-	private ResponseEntity<Collection<Cliente>> buscarTodosClientes() {
+	public ResponseEntity<Collection<Cliente>> buscarTodosClientes() {
 		
 		Collection<Cliente> buscados = clienteService.buscarTodos();
 		return new ResponseEntity<>(buscados, HttpStatus.OK);
@@ -54,6 +54,7 @@ public class ClienteController {
 		
 	}
 	
+	
 	//Buscar cliente por ID e exibir
 	@RequestMapping(method=RequestMethod.GET, value="/clientes/{id}")
 	public ResponseEntity<Cliente> consultarCliente(@PathVariable Integer id) {
@@ -67,6 +68,7 @@ public class ClienteController {
 			return new ResponseEntity<>(clienteEncontrado, HttpStatus.OK);
 		
 	}
+
 	
 	//Buscar cliente e alterar
 		@RequestMapping(method=RequestMethod.PUT, value="/cliente")
@@ -81,5 +83,5 @@ public class ClienteController {
 				return new ResponseEntity<>(clienteAlterado, HttpStatus.OK);
 			
 		}
-		
+			
 }
