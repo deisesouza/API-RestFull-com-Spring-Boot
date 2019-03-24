@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Collection;
 import com.deise.souza.model.*;
 import com.deise.souza.service.*;
@@ -20,8 +18,7 @@ public class ClienteController {
 	
 	@Autowired
 	ClienteService clienteService;
-	
-	
+
 	//ENDPOINTS
 	
 	//cadastrar cliente
@@ -50,10 +47,8 @@ public class ClienteController {
 			return new ResponseEntity<>(clienteEncontrado, HttpStatus.NOT_FOUND);
 		}
 		clienteService.excluir(clienteEncontrado);
-			return new ResponseEntity<>(HttpStatus.OK);
-		
+			return new ResponseEntity<>(HttpStatus.OK);	
 	}
-	
 	
 	//Buscar cliente por ID e exibir
 	@RequestMapping(method=RequestMethod.GET, value="/clientes/{id}")
@@ -65,8 +60,7 @@ public class ClienteController {
 			return new ResponseEntity<>(clienteEncontrado, HttpStatus.NOT_FOUND);
 		}
 
-			return new ResponseEntity<>(clienteEncontrado, HttpStatus.OK);
-		
+			return new ResponseEntity<>(clienteEncontrado, HttpStatus.OK);	
 	}
 
 	
@@ -81,7 +75,7 @@ public class ClienteController {
 			}
 			clienteService.alterar(clienteAlterado);
 				return new ResponseEntity<>(clienteAlterado, HttpStatus.OK);
-			
+
 		}
 			
 }
